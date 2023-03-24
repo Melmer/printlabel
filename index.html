@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Stampa Etichette</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <style type="text/css">
 body {
   background: rgb(204,204,204);
@@ -11,6 +12,7 @@ page {
   background: white;
   display: block;
   box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  order: 2;
 }
 page[size="A4"] {
   width: 21cm;
@@ -18,16 +20,16 @@ page[size="A4"] {
 }
 inner {
     width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-content: start;
-    padding-top: 0.9cm;
+    align-content: center;
 }
 box {
     display: inline-block;
-    width: 9.91cm;
-    height: 13.9cm;
+    width: 47.19%;
+    height: 46.68%;
     border: 1px solid black;
     border-radius: 0.3cm;
     padding: 0.3cm;
@@ -63,6 +65,25 @@ box.add:hover {
 }
 #instructions {
     max-width: 25vw;
+    order: 3;
+}
+/* For mobile phones: */
+@media only screen and (max-width: 968px) {
+    #instructions {
+        order: 1;
+        max-width: 100vw;
+        padding: 0 0.67em;
+    }
+    body {
+        flex-wrap: wrap;
+    }
+    page {
+        width: 100% !important;
+        height: 141.14vw !important;
+    }
+    box.add::before {
+        font-size: 7em;
+    }
 }
 @media print {
   body {
@@ -106,7 +127,7 @@ box.add:hover {
 
             <h2>Istruzioni</h2>
             <ul>
-                <li>Al momento solo browser desktop (no smartphone) sono supportati. Chrome e Firefox sono gli unici due testati</li>
+                <li>Funziona meglio su desktop ma è utilizzabile anche da mobile. Chrome e Firefox sono gli unici due browser testati</li>
                 <li>Fai click sul "+" o trascina un'immagine (PNG, JPG, SVG) su uno dei riquadri</li>
                 <li>Aggiungi altre immagini se necessario</li>
                 <li>Stampa la pagina come faresti normalmente (oppure fai click <a onclick="window.print()" href="#">qui</a>)</li>
@@ -114,7 +135,7 @@ box.add:hover {
                 <li>Per resettare semplicemente ricarica la pagina</li>
             </ul>
 
-            <p>Nota: i documenti NON vengono caricati su nessun server, il tutto viene processato dal browser del vostro dispositivo</p>
+            <p>Nota: i documenti NON vengono caricati su nessun server, il tutto viene processato dal browser del tuo dispositivo</p>
         </div>
 
         <input type="file" style="display: none"/>
