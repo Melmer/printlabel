@@ -1,160 +1,175 @@
-<html>
-    <head>
-        <title>Stampa Etichette</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <style type="text/css">
-body {
-    background: rgb(204,204,204);
-    display: flex;
-    justify-content: space-evenly;
-}
-page {
-    background: white;
-    display: block;
-    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-    order: 2;
-}
-page {
-    height: 98vh;
-    width: 69.31vh;
-}
-inner {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-}
-box {
-    display: inline-block;
-    width: 47.19%;
-    height: 46.68%;
-    border: 1px dashed grey;
-    border-radius: 0.3cm;
-    padding: 0.3cm;
-    box-sizing: border-box;
-}
-box > div {
-    width: 100%;
-    height: 100%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-box:nth-child(even) {
-    margin-left: 0.2cm;
-}
-box:nth-child(-n+2) {
-    border-bottom: 0;
-}
-box.add {
-    background-color: rgb(222, 222, 222);
-}
-box.dragover {
-    border: 5px dashed;
-}
-box.add::before {
-    content: '+';
-    width: 100%;
-    height: 100%;
-    display: flex;
-    font-size: 10em;
-    justify-content: center;
-    align-items: center;
-}
-box.add:hover {
-    cursor: pointer;
-}
-#instructions {
-    max-width: 25vw;
-    order: 3;
-}
-    /* For mobile phones: */
-    @media only screen and (max-width: 968px) {
-        #instructions {
-            order: 1;
-            max-width: 100vw;
-            padding: 0 0.67em;
-        }
-        body {
-            flex-wrap: wrap;
-        }
-        page {
-            width: 100% !important;
-            height: 141.14vw !important;
-        }
-        box.add::before {
-            font-size: 7em;
-        }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Print Labels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
     }
+
+    body {
+      background: #ccc;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1em;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+    }
+
+    .page {
+      background: #fff;
+      box-shadow: 0 0 0.5cm rgba(0,0,0,0.3);
+      width: 21cm;
+      height: 29.7cm;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1cm;
+      gap: 0.5cm;
+      align-content: flex-start;
+    }
+
+    .box {
+      width: calc(50% - 0.25cm);
+      height: 50%;
+      border: 1px dashed #999;
+      border-radius: 0.3cm;
+      position: relative;
+      overflow: hidden;
+      background: #f9f9f9;
+    }
+
+    .box.label {
+      border: none;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    .box.add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: #eee;
+      transition: background 0.3s;
+    }
+
+    .box.add:hover {
+      background-color: #ddd;
+    }
+
+    .box.add::before {
+      content: "+";
+      font-size: 6em;
+      color: #666;
+    }
+
+    .box.dragOver {
+      border: 3px dashed #007BFF;
+    }
+
+    .box > div {
+      width: 100%;
+      height: 100%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #instructions {
+      max-width: 300px;
+      background: #fff;
+      padding: 1em;
+      box-shadow: 0 0 0.3cm rgba(0,0,0,0.2);
+    }
+
+    #instructions h1, #instructions h2 {
+      margin-top: 0;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .page {
+        width: 100%;
+        height: auto;
+      }
+
+      .box {
+        width: 100%;
+        height: 30vh;
+      }
+
+      #instructions {
+        max-width: 100%;
+        order: -1;
+      }
+    }
+
     @media print {
-        body {
-            margin: 0;
-            display: initial;
-            box-shadow: 0 0 0 0;
-            -webkit-print-color-adjust:exact !important;
-            print-color-adjust:exact !important;
-        }
-        page {
-            width: 21cm !important;
-            height: 29.7cm !important;
-        }
-        @page {
-            margin: 0;
-        }
-        box {
-            border: 0px;
-        }
-        box.add {
-            background: rgba(0, 0, 0, 0) !important;
-        }
-        box.add::before {
-            display:none;
-        }
-        #instructions {
-            display: none;
-        }
+      body {
+        margin: 0;
+        display: block;
+        background: none;
+      }
+
+      .page {
+        box-shadow: none;
+        width: 21cm !important;
+        height: 29.7cm !important;
+      }
+
+      #instructions {
+        display: none;
+      }
+
+      .box.add::before {
+        display: none;
+      }
+
+      .box {
+        border: none !important;
+      }
+
+      .box.add {
+        background: none !important;
+      }
     }
-        </style>
-    </head>
-    <body>
-        <page size="A4">
-        <inner>
-        <box></box>
-        <box></box>
-        <box></box>
-        <box></box>
-        </inner>
-        </page>
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="box add"></div>
+    <div class="box add"></div>
+    <div class="box add"></div>
+    <div class="box add"></div>
+  </div>
 
-        <div id="instructions">
-            <h1 style="margin-bottom: 0;">Stampa Etichette</h1>
-            <p style="margin-top: 0;">By <a href="https://twitter.com/afilini" target="_blank" rel="noreferrer">@afilini</a></p>
+  <aside id="instructions">
+    <h1>Print Labels</h1>
+    <p>By <a href="https://twitter.com/afilini" target="_blank" rel="noreferrer">@afilini</a></p>
+    <h2>Instructions</h2>
+    <ul>
+      <li>Click the "+" or drag an image (PNG, JPG, SVG) or a PDF file (only the first page will be used) into one of the boxes</li>
+      <li>Add more images if needed</li>
+      <li>Print the page as you normally would (or click <a onclick="window.print()" href="#">here</a>)</li>
+      <li>Make sure the print format is A4 and the labels are the correct size (<a href="https://www.amazon.it/dp/B07DM7X5Y7" target="_blank" rel="noreferrer">recommended Amazon Basics labels here</a>)</li>
+      <li>To reset, simply reload the page</li>
+      <li>Works best on desktop but also usable on mobile. Chrome and Firefox are the only two tested browsers</li>
+    </ul>
+    <p><strong>Note:</strong> Documents are <u>not</u> uploaded to any server — everything is processed in your browser.</p>
+  </aside>
 
-            <h2>Istruzioni</h2>
-            <ul>
-                <li>Fai click sul "+" o trascina un'immagine (PNG, JPG, SVG) o un file PDF (solo la prima pagina viene utilizzata) su uno dei riquadri</li>
-                <li>Aggiungi altre immagini se necessario</li>
-                <li>Stampa la pagina come faresti normalmente (oppure fai click <a onclick="window.print()" href="#">qui</a>)</li>
-                <li>Assicurati che il formato di stampa sia A4 e che le etichette siano della dimensione corretta (<a href="https://www.amazon.it/dp/B07DM7X5Y7" target="_blank" rel="noreferrer">qui</a> trovi quelle consigliate di Amazon Basics)</li>
-                <li>Per resettare semplicemente ricarica la pagina</li>
-                <li>Funziona meglio su desktop ma è utilizzabile anche da mobile. Chrome e Firefox sono gli unici due browser testati</li>
-            </ul>
+  <input type="file" style="display:none" />
+  <canvas style="display:none"></canvas>
 
-            <p>Nota: i documenti NON vengono caricati su nessun server, il tutto viene processato dal browser del tuo dispositivo</p>
-        </div>
-
-        <input type="file" style="display: none"/>
-        <canvas style="display: none;"></canvas>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js" integrity="sha512-ml/QKfG3+Yes6TwOzQb7aCNtJF4PUyha6R3w8pSTo/VJSywl7ZreYvvtUso7fKevpsI+pYVVwnu82YO0q3V6eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js" integrity="sha512-ml/QKfG3+Yes6TwOzQb7aCNtJF4PUyha6R3w8pSTo/VJSywl7ZreYvvtUso7fKevpsI+pYVVwnu82YO0q3V6eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
             var input = document.querySelector('input[type=file]');
-            var boxes = document.querySelectorAll('box');
+            var boxes = document.querySelectorAll('.box');
 
             document.addEventListener('drop', (e) => e.preventDefault(), false);
 
@@ -212,8 +227,13 @@ box.add:hover {
                         pdf.getPage(pageNumber).then(function(page) {
                             console.log('Page loaded');
 
-                            var scale = 1.0;
-                            var viewport = page.getViewport({scale: scale});
+                            var scale = 3.0;
+                            var originalViewport = page.getViewport({scale: scale});
+                            
+                            const isLandscape = originalViewport.width > originalViewport.height;
+                            const rotation = isLandscape ? 270 : -90;
+
+                            const viewport = page.getViewport({ scale: scale, rotation: rotation });
 
                             // Prepare canvas using PDF page dimensions
                             var canvas = document.querySelector('canvas');
@@ -226,6 +246,7 @@ box.add:hover {
                                 canvasContext: context,
                                 viewport: viewport
                             };
+
                             var renderTask = page.render(renderContext);
                             renderTask.promise.then(function () {
                                 console.log('Page rendered');
@@ -246,6 +267,7 @@ box.add:hover {
             function setFile(target, file) {
                 function cb(url) {
                     if (target) {
+                        target.classList.add("label");
                         target.classList.remove("add");
                         target.classList.remove("dragOver");
                         target.onclick = null;
@@ -274,5 +296,5 @@ box.add:hover {
 
             input.addEventListener('change', changeFile);
         </script>
-    </body>
+</body>
 </html>
