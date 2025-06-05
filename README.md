@@ -1,4 +1,4 @@
-# Print Labels
+# Print Label
 
 Very basic tool to align up to four A6 labels on an A4 sheet of paper like [this](https://www.amazon.it/dp/B07DM7X5Y7).
 
